@@ -1,0 +1,12 @@
+*~
+.DS_Store
+*.swp
+.idea/
+
+node_modules/
+
+.tags*
+.flowconfig
+
+*.min.js
+*.min.css
