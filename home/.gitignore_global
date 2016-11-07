@@ -1,6 +1,7 @@
 *~
 .DS_Store
 *.swp
+*.class
 .idea/
 
 node_modules/
@@ -10,3 +11,16 @@ node_modules/
 
 *.min.js
 *.min.css
+
+# Emacs
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive

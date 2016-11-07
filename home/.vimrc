@@ -11,7 +11,7 @@ Plugin 'adimit/prolog.vim'
 " Plugin 'koron/minimap-vim'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
-" Plugin 'derekwyatt/vim-scala'
+Plugin 'derekwyatt/vim-scala'
 Plugin 'vim-airline/vim-airline-themes'
 " Error
 Plugin 'scrooloose/syntastic'
@@ -22,7 +22,6 @@ Plugin 'bling/vim-airline'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'severin-lemaignan/vim-minimap'
-Plugin 'valloric/youcompleteme'
 Plugin 'Shougo/vimshell'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'airblade/vim-gitgutter'
@@ -118,8 +117,6 @@ set scrolloff=5 "keep at least 5 lines above/below
 set hlsearch " highlight all matches of a search
 set incsearch " searches as you type
 
-" MacVim settings
-set guifont=Sauce\ Code\ Powerline\ Light:h18
 
 " =================
 " KEYBOARD SETTINGS
@@ -171,10 +168,6 @@ let NERDTreeShowBookmarks=1
 " Gundo
 " nnoremap <F5> :GundoToggle<CR>
 
-" YouCompleteMe
-nnoremap <leader>d :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>g :YcmCompleter GoToDefinition<CR>
-
 " ctrlP settings
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
@@ -186,7 +179,6 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_working_path_mode = 'r'
 let g:ctrlp_extensions = ['line']
 noremap <C-U> :CtrlPCmdPalette<CR>
-noremap <D-P> :CtrlPCmdPalette<CR>
 
 
 " Airline
@@ -215,3 +207,13 @@ let g:airline_mode_map = {
             \ }
 
 let g:neocomplete#enable_at_startup = 1
+
+" MacVim settings
+set guifont=Fira\ Code:h18
+" set guifont=Sauce\ Code\ Powerline\ Light:h18
+if has("gui_macvim")
+    let macvim_hig_shift_movement = 1
+    noremap <D-P> :CtrlPCmdPalette<CR>
+    noremap <D-/> :Commentary<CR>
+endif
+
