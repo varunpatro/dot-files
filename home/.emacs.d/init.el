@@ -102,7 +102,6 @@
   :bind*
   (("C-s" . swiper)
    ("C-c C-r" . ivy-resume)
-   ("M-a" . counsel-M-x)
    ("C-x C-f" . counsel-find-file)
    ("C-c h f" . counsel-describe-function)
    ("C-c h v" . counsel-describe-variable)
@@ -133,7 +132,6 @@
        ("j"
         ivy--switch-buffer-other-window-action
         "other window")))))
-
 
 ;; Browse Kill Ring (clipboard history)
 (use-package browse-kill-ring
