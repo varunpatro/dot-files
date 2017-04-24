@@ -42,6 +42,13 @@
 ;; Easier y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; Easier Scrolling
+(use-package smooth-scrolling)
+(smooth-scrolling-mode 1)
+
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+;;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+
 ;; Custom Files
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
@@ -67,7 +74,7 @@
 
 ;; Default Font
 (add-to-list 'default-frame-alist
-             '(font . "Fira Code-16"))
+             '(font . "Fira Code-14"))
 
 ;; Tabs vs Spaces
 (setq-default tab-width 4)
@@ -92,50 +99,62 @@
 ;; Avy (char based decision tree)
 (use-package avy
   :bind* (("C-'" . avy-goto-char)
-          ("C-," . avy-goto-char-2)))
+          ("M-g f" . avy-goto-line)
+          ("M-g w" . avy-goto-word-1)))
+
+(avy-setup-default)
 
 ;; imenu (Interactive menu)
 (bind-key* "M-i" 'imenu)
 
-(use-package counsel)
-(use-package swiper
-  :bind*
-  (("C-s" . swiper)
-   ("C-c C-r" . ivy-resume)
-   ("C-x C-f" . counsel-find-file)
-   ("C-c h f" . counsel-describe-function)
-   ("C-c h v" . counsel-describe-variable)
-   ("C-c i u" . counsel-unicode-char)
-   ("M-i" . counsel-imenu)
-   ("C-c g" . counsel-git)
-   ("C-c j" . counsel-git-grep)
-   ("C-c k" . counsel-ag)
-   ("C-c l" . counsel-locate))
-  :config
-  (progn
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-;;    (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy))) ;; fuzzy find
-    (define-key read-expression-map (kbd "C-r") #'counsel-expression-history)
-    (ivy-set-actions
-     'counsel-find-file
-     '(("d" (lambda (x) (delete-file (expand-file-name x)))
-        "delete"
-        )))
-    (ivy-set-actions
-     'ivy-switch-buffer
-     '(("k"
-        (lambda (x)
-          (kill-buffer x)
-          (ivy--reset-state ivy-last))
-        "kill")
-       ("j"
-        ivy--switch-buffer-other-window-action
-        "other window")))))
+;; Helm
+(require 'helm)
+(require 'helm-config)
+;; (helm-mode 1)
 
-;; Browse Kill Ring (clipboard history)
-(use-package browse-kill-ring
-  :bind ("M-y" . browse-kill-ring))
+;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
+
+;(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+;(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
+;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+
+(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+      helm-ff-file-name-history-use-recentf t
+      helm-echo-input-in-header-line t)
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "C-x b") 'helm-mini)
+(setq helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match    t)
+
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+
+
+(helm-mode 1)
+
+;; Helm Swoop
+(use-package helm-swoop)
+
+;; Deft
+(use-package deft)
+(setq deft-extensions '("org" "md" "txt"))
+(setq deft-default-extension "org")
+(setq deft-directory "~/Dropbox/notes")
+(setq deft-text-mode 'org-mode)
+(setq deft-auto-save-interval 0)
+(global-set-key (kbd "C-c d") 'deft)
+
+
+(setq deft-recursive t)
+(global-set-key (kbd "C-x C-g") 'deft-find-file)
 
 ;; Expand Region
 (use-package expand-region
@@ -210,12 +229,5 @@
   :config
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
-
-;; Golden Ratio
-;; (use-package golden-ratio
-;;   :diminish golden-ratio-mode
-;;   :config (progn
-;;             (add-to-list 'golden-ratio-extra-commands 'ace-window)
-;;             (golden-ratio-mode 1)))
 
 ;;; init.el ends here
