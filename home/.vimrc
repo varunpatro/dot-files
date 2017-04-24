@@ -6,12 +6,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 " Languages
-" Plugin 'fatih/vim-go'
-Plugin 'adimit/prolog.vim'
-" Plugin 'koron/minimap-vim'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'pangloss/vim-javascript'
-Plugin 'derekwyatt/vim-scala'
 Plugin 'vim-airline/vim-airline-themes'
 " Error
 Plugin 'scrooloose/syntastic'
@@ -36,10 +30,8 @@ Plugin 'bkad/CamelCaseMotion'
 Plugin 'sjl/gundo.vim'
 Plugin 'jiangmiao/auto-pairs'
 " Plugin 'vim-scripts/taglist.vim'
-" Plugin 'terryma/vim-multiple-cursors'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'morhetz/gruvbox'
-" Plugin 'chriskempson/base16-vim'
 call vundle#end()
 
 " ================
@@ -127,7 +119,6 @@ nnoremap <leader>r :so ~/.vimrc<CR>
 
 " Easier Commands
 nnoremap ; :
-inoremap jj <ESC>
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s<C-w>l
 nnoremap <leader>q <C-w><C-q>
