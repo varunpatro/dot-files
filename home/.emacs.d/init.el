@@ -18,12 +18,15 @@
       user-mail-address "varun.kumar.patro@gmail.com")
 
 ;; UI Cruft
-;; (tooltip-mode -1)
-(tool-bar-mode -1)
-;; (menu-bar-mode -1)
-(scroll-bar-mode -1)
-;; (setq inhibit-splash-screen t)
-;; (setq inhibit-startup-message t
+(if (display-graphic-p)
+    (progn
+      ;; (tooltip-mode -1)
+      (tool-bar-mode -1)
+      ;; (menu-bar-mode -1)
+      (scroll-bar-mode -1)
+      ;; (setq inhibit-splash-screen t)
+      ;; (setq inhibit-startup-message t)
+      ))
 
 ;; Use-package
 (unless (package-installed-p 'use-package)
@@ -47,7 +50,7 @@
 (smooth-scrolling-mode 1)
 
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
-;;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+;; (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 
 ;; Custom Files
 (setq custom-file "~/.emacs.d/custom.el")
@@ -58,6 +61,10 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+
+(setq save-place-file "~/.emacs.d/saveplace")
+(setq-default save-place t)
+(require 'saveplace)
 
 ;; Delete Old Files
 ;; (let ((week (* 60 60 24 7))
@@ -110,7 +117,6 @@
 ;; Helm
 (require 'helm)
 (require 'helm-config)
-;; (helm-mode 1)
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
@@ -118,13 +124,8 @@
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 
-;(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-;(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
-;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
 (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
       helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
       helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
       helm-ff-file-name-history-use-recentf t
       helm-echo-input-in-header-line t)
@@ -137,7 +138,6 @@
 
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
-
 (helm-mode 1)
 
 ;; Helm Swoop
@@ -145,24 +145,17 @@
 
 ;; Deft
 (use-package deft)
+(setq deft-recursive t)
 (setq deft-extensions '("org" "md" "txt"))
 (setq deft-default-extension "org")
 (setq deft-directory "~/Dropbox/notes")
-(setq deft-text-mode 'org-mode)
 (setq deft-auto-save-interval 0)
 (global-set-key (kbd "C-c d") 'deft)
-
-
-(setq deft-recursive t)
 (global-set-key (kbd "C-x C-g") 'deft-find-file)
 
 ;; Expand Region
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
-
-;; Zap to Char
-(use-package zzz-to-char
-  :bind (("M-z" . zzz-up-to-char)))
 
 ;; Multiple Cursors
 (use-package multiple-cursors
@@ -190,7 +183,8 @@
                 company-begin-commands '(self-insert-command)
                 company-transformers '(company-sort-by-occurrence))
           (use-package company-quickhelp
-            :config (company-quickhelp-mode 1))))
+            :config (company-quickhelp-mode 1))
+          ))
 
 ;; Find File in Project
 (use-package find-file-in-project
@@ -224,6 +218,10 @@
             (setq git-gutter+-modified-sign "==")
             (setq git-gutter+-added-sign "++")
             (setq git-gutter+-deleted-sign "--")))
+
+(setq scroll-margin 5
+      scroll-conservatively 9999
+      scroll-step 1)
 
 (use-package keyfreq
   :config

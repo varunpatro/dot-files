@@ -24,3 +24,10 @@ tramp
 # Org-mode
 .org-id-locations
 *_archive
+
+# Binaries
+*.pdf
+*.zip
+
+# Debug
+*.dSYM/
