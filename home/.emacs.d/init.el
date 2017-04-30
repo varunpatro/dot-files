@@ -41,6 +41,9 @@
   (require 'diminish)
   (setq use-package-always-ensure t))
 
+;; Validate is a package that checks for and reports Emacs config errors.
+(use-package validate
+  :demand t)
 
 ;; Easier y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -79,6 +82,9 @@
 ;; Line Numbers
 (global-linum-mode 1)
 
+;; Line Highlight
+;; (global-hl-line-mode 1)
+
 ;; Default Font
 (add-to-list 'default-frame-alist
              '(font . "Fira Code-14"))
@@ -87,12 +93,64 @@
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 
+;; Type over a selected region, instead of deleting before typing.
+(delete-selection-mode +1)
+
+(defun open-next-line (arg)
+  "Move to the next line and then opens a line.
+   See also `newline-and-indent'."
+  (interactive "p")
+  (end-of-line)
+  (open-line arg)
+  (next-line 1)
+  (when 'newline-and-indent
+    (indent-according-to-mode)))
+
+(defun open-previous-line (arg)
+  "Open a new line before the current one. 
+     See also `newline-and-indent'."
+  (interactive "p")
+  (beginning-of-line)
+  (open-line arg)
+  (when 'newline-and-indent
+    (indent-according-to-mode)))
+
+(bind-key* "C-o" 'open-next-line)
+(bind-key* "M-o" 'open-previous-line)
+
+(bind-key* "C-x m" 'eshell)
+
+(add-hook 'after-init-hook (lambda () (electric-pair-mode 1)))
+
+;;; CUSTOM PACKAGES
+
 ;; Theming
 ;; (load-theme 'gruvbox t)
+
+(use-package visual-regexp-steroids
+  :bind* (("C-c m" . vr/mc-mark)
+          ("C-c r" . vr/replace)
+          ("C-c q" . vr/query-replace)
+          ("C-s" . vr/isearch-forward)
+          ("C-r" . vr/isearch-backward)))
+
+(use-package aggressive-indent
+  :diminish aggressive-indent-mode
+  :config (add-hook 'prog-mode-hook 'aggressive-indent-mode))
+
+;; Add PATH to eshell
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
 
 ;; WindMove
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
+
+;; Keep your text indented at all times
+(use-package aggressive-indent
+  :diminish aggressive-indent-mode
+  :config (add-hook 'prog-mode-hook 'aggressive-indent-mode))
 
 ;; Flycheck
 (use-package flycheck
@@ -166,7 +224,6 @@
 ;; Templating
 (use-package yasnippet
   :diminish yas-global-mode yas-minor-mode
-  :defer 5
   :init (add-hook 'after-init-hook 'yas-global-mode)
   :config (setq yas-snippet-dirs '("~/.emacs.d/snippets/")))
 
