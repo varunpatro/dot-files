@@ -131,8 +131,8 @@
   :bind* (("C-c m" . vr/mc-mark)
           ("C-c r" . vr/replace)
           ("C-c q" . vr/query-replace)
-          ("C-s" . vr/isearch-forward)
-          ("C-r" . vr/isearch-backward)))
+          ("C-s" . isearch-forward-regexp)
+          ("C-r" . isearch-backward-regexp)))
 
 (use-package aggressive-indent
   :diminish aggressive-indent-mode
@@ -173,7 +173,7 @@
 (bind-key* "M-i" 'imenu)
 
 ;; Helm
-(require 'helm)
+(use-package helm)
 (require 'helm-config)
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
@@ -276,13 +276,7 @@
             (setq git-gutter+-added-sign "++")
             (setq git-gutter+-deleted-sign "--")))
 
-(setq scroll-margin 5
-      scroll-conservatively 9999
+(setq scroll-conservatively 9999
       scroll-step 1)
-
-(use-package keyfreq
-  :config
-  (keyfreq-mode 1)
-  (keyfreq-autosave-mode 1))
 
 ;;; init.el ends here
