@@ -22,10 +22,10 @@ export MANPATH="/usr/local/man:$MANPATH"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR="emacsclient -t"                  # $EDITOR should open in terminal
+    export EDITOR='emacsclient -t -c -a ""'                  # $EDITOR should open in terminal
 else
-    export EDITOR='emacsclient -c -a emacs'
-    export VISUAL="emacsclient -c -a emacs"         # $VISUAL opens in GUI with non-daemon as alternate
+    export EDITOR='emacsclient -t -c -a ""'
+    export VISUAL='emacsclient -t -c -a ""'         # $VISUAL opens in GUI with non-daemon as alternate
 fi
 
 man() {
@@ -51,10 +51,10 @@ if [[ -n $(command -v hub) ]]; then
     alias git="hub"
 fi
 
-alias ll="ll -lath"
+alias ll="ls -lath"
 
-# Source Bash Profile
-source ~/.bash_profile
+# Source Profile
+source ~/.profile
 
 # Custom
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
