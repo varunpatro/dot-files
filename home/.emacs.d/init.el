@@ -125,7 +125,8 @@
 ;;; CUSTOM PACKAGES
 
 ;; Theming
-;; (load-theme 'gruvbox t)
+(use-package color-theme-sanityinc-tomorrow
+  :config (color-theme-sanityinc-tomorrow-eighties))
 
 (use-package visual-regexp-steroids
   :bind* (("C-c m" . vr/mc-mark)

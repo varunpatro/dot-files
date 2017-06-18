@@ -58,3 +58,19 @@ source ~/.profile
 
 # Custom
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+c2p () {
+	file=$1
+	folder=${1%.*}
+	unzip -d $folder $file
+	pushd $folder
+	convert *.png ../$folder.pdf
+	popd
+}
+cj2p () {
+	file=$1
+	folder=${1%.*}
+	unzip -d $folder $file
+	pushd $folder
+	convert *.jpg ../$folder.pdf
+	popd
+}
