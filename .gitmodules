@@ -1,6 +1,6 @@
 [submodule "home/.emacs.d/snippets"]
 	path = home/.emacs.d/snippets
 	url = https://github.com/AndreaCrotti/yasnippet-snippets
-[submodule ".tmux"]
+[submodule "home/.tmux"]
 	path = home/.tmux
 	url = https://github.com/gpakosz/.tmux
